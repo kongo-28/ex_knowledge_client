@@ -84,7 +84,7 @@
   background-color: #0056b3;
 }
 
-.editButton {
+.likeButton {
   background-color: #11a42c;
   color: white;
   border: none;
@@ -94,12 +94,26 @@
   margin-right: 10px;
 }
 
-.editButton:hover {
+.likeButton:hover {
   background-color: #077810;
 }
 
-.deleteButton {
+.superLikeButton {
   background-color: #e02424;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.superLikeButton:hover {
+  background-color: #9e1b1b;
+}
+
+.knowButton {
+  background-color: #2085c9;
   color: white;
   border: none;
   border-radius: 4px;
@@ -107,6 +121,6 @@
   cursor: pointer;
 }
 
-.deleteButton:hover {
-  background-color: #9e1b1b;
+.knowButton:hover {
+  background-color: #155b8a;
 }

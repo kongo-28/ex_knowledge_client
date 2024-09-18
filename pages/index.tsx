@@ -37,9 +37,12 @@ export default function Home({ knowledges }: Props) {
         <h2>EX-Knowledge</h2>
         <div>
           {knowledges.map((knowledge: Knowledge) => (
-            <div key={knowledge.id}>
+            <div key={knowledge.id} className={styles.postCard}>
               <p>{knowledge.title}</p>
               <p>{knowledge.content}</p>
+              <button className={styles.likeButton}>Like</button>
+              <button className={styles.superLikeButton}>super Like!</button>
+              <button className={styles.knowButton}>Know</button>
             </div>
           ))}
         </div>
