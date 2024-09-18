@@ -34,7 +34,15 @@ export default function Home({ knowledges }: Props) {
       </Head>
 
       <div className={styles.homeContainer}>
-        <h2>EX-Knowledge</h2>
+        {/* <h2>EX-Knowledge</h2> */}
+        <div>
+          <Image
+            src="/logo.jpg"
+            width={100}
+            height={50}
+            alt="Picture of the author"
+          />
+        </div>
         <div>
           {knowledges.map((knowledge: Knowledge) => (
             <div key={knowledge.id} className={styles.postCard}>
