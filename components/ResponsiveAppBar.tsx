@@ -49,7 +49,16 @@ function ResponsiveAppBar({ title }: HeaderProps) {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
+
+          <Link href="/">
+            <Image
+              src="/IMG_0076.PNG"
+              width={70}
+              height={70}
+              alt="Picture of the author"
+            />
+          </Link>
           <Typography
             variant="h6"
             noWrap
@@ -103,7 +112,7 @@ function ResponsiveAppBar({ title }: HeaderProps) {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
