@@ -124,3 +124,9 @@
 .knowButton:hover {
   background-color: #155b8a;
 }
+
+.header{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
