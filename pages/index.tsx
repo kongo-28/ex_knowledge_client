@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import styles from "@/styles/Home.module.css";
 import { Knowledge } from "@/types";
 import Link from "next/link";
+import Header from "@/components/Header";
+import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 
 type Props = {
   knowledges: Knowledge[];
@@ -38,14 +40,8 @@ export default function Home({ knowledges }: Props) {
       <div className={styles.homeContainer}>
         {/* <h2>EX-Knowledge</h2> */}
         <div>
-          <Image
-            src="/logo.jpg"
-            width={100}
-            height={50}
-            alt="Picture of the author"
-          />
-          <Link href="http://localhost:3001/register"> Register </Link>
-          <Link href="http://localhost:3001/session"> Sign in </Link>
+          {/* <Header title="Home" /> */}
+          <ResponsiveAppBar title="Home" />
         </div>
         <div>
           {knowledges.map((knowledge: Knowledge) => (

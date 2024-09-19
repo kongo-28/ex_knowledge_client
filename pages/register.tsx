@@ -2,6 +2,8 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import styles from "@/styles/Home.module.css";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Header from "@/components/Header";
+import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 
 const register = () => {
   // ////////  handleSubmit  ////////////////////////////////////
@@ -31,7 +33,8 @@ const register = () => {
   ///////////////////////////////////////////////////////////////
   return (
     <div className={styles.container}>
-      <p>新規登録</p>
+      {/* <Header title="Register" /> */}
+      <ResponsiveAppBar title="Register" />
       <form className={styles.form} onSubmit={handleSubmit}>
         <label className={styles.label}>email</label>
         <input
