@@ -23,6 +23,8 @@ export async function getStaticProps() {
   };
 }
 
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 export default function Home({ knowledges }: Props) {
   return (
     <>
@@ -42,6 +44,8 @@ export default function Home({ knowledges }: Props) {
             height={50}
             alt="Picture of the author"
           />
+          <Link href="http://localhost:3001/register"> Register </Link>
+          <Link href="http://localhost:3001/session"> Sign in </Link>
         </div>
         <div>
           {knowledges.map((knowledge: Knowledge) => (
