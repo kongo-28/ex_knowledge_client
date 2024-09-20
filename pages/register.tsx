@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Header from "@/components/Header";
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import SignUp from "@/components/sign-up/SignUp";
 
 const register = () => {
   // ////////  handleSubmit  ////////////////////////////////////
@@ -57,6 +58,7 @@ const register = () => {
           register!!!
         </button>
       </form>
+      <SignUp />
     </div>
   );
 };

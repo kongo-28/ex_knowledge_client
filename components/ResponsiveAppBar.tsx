@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import Image from "next/image";
 import Link from "next/link";
 
-const pages = ["Home", "Register", "Session"];
+const pages = ["Register", "Session"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 type HeaderProps = {
