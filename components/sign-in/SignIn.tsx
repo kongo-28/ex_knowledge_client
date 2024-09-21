@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -17,6 +17,8 @@ import ForgotPassword from "./ForgotPassword";
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from "./CustomIcons";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -71,13 +73,27 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    console.log(email, password);
+
+    ////////////////// APIをたたく///////////////////////
+    try {
+      await axios.post("http://localhost:3000/auth/sign_in", {
+        email: email,
+        password: password,
+      });
+
+      router.push("/"); //リダイレクト
+    } catch (err) {
+      alert("ログインに失敗しました");
+    }
+    ////////////////// APIをたたく///////////////////////
   };
 
   const validateInputs = () => {
@@ -149,6 +165,9 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 variant="outlined"
                 color={emailError ? "error" : "primary"}
                 sx={{ ariaLabel: "email" }}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
               />
             </FormControl>
             <FormControl>
@@ -176,6 +195,9 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 fullWidth
                 variant="outlined"
                 color={passwordError ? "error" : "primary"}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
               />
             </FormControl>
             <FormControlLabel
