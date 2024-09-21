@@ -130,31 +130,25 @@ export default function SignUp() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    const router = useRouter();
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   name: data.get("name"),
-    //   lastName: data.get("lastName"),
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
-
     console.log(email, password);
 
-    // APIをたたく;
-    // try {
-    //   await axios.post("http://localhost:3000/auth", {
-    //     email: email,
-    //     password: password,
-    //   });
+    ////////////////// APIをたたく///////////////////////
+    try {
+      await axios.post("http://localhost:3000/auth", {
+        email: email,
+        password: password,
+      });
 
-    //   router.push("/"); //リダイレクト
-    // } catch (err) {
-    //   alert("登録に失敗しました");
-    // }
+      router.push("/"); //リダイレクト
+    } catch (err) {
+      alert("登録に失敗しました");
+    }
+    ////////////////// APIをたたく///////////////////////
   };
 
   return (
