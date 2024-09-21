@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -21,6 +21,8 @@ import {
 import getSignUpTheme from "./theme/getSignUpTheme";
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from "./CustomIcons";
 import TemplateFrame from "./TemplateFrame";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -126,15 +128,33 @@ export default function SignUp() {
     return isValid;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const router = useRouter();
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get("name"),
-      lastName: data.get("lastName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    // console.log({
+    //   name: data.get("name"),
+    //   lastName: data.get("lastName"),
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+
+    console.log(email, password);
+
+    // APIをたたく;
+    // try {
+    //   await axios.post("http://localhost:3000/auth", {
+    //     email: email,
+    //     password: password,
+    //   });
+
+    //   router.push("/"); //リダイレクト
+    // } catch (err) {
+    //   alert("登録に失敗しました");
+    // }
   };
 
   return (
@@ -156,7 +176,6 @@ export default function SignUp() {
             }}
           >
             <Card variant="outlined">
-              {/* <SitemarkIcon /> */}
               <Typography
                 component="h1"
                 variant="h4"
@@ -196,6 +215,9 @@ export default function SignUp() {
                     error={emailError}
                     helperText={emailErrorMessage}
                     color={passwordError ? "error" : "primary"}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setEmail(e.target.value)
+                    }
                   />
                 </FormControl>
                 <FormControl>
@@ -212,14 +234,11 @@ export default function SignUp() {
                     error={passwordError}
                     helperText={passwordErrorMessage}
                     color={passwordError ? "error" : "primary"}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      setPassword(e.target.value)
+                    }
                   />
                 </FormControl>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive updates via email."
-                />
                 <Button
                   type="submit"
                   fullWidth
@@ -232,7 +251,7 @@ export default function SignUp() {
                   Already have an account?{" "}
                   <span>
                     <Link
-                      href="/material-ui/getting-started/templates/sign-in/"
+                      href="http://localhost:3001/sign-in"
                       variant="body2"
                       sx={{ alignSelf: "center" }}
                     >
@@ -240,29 +259,6 @@ export default function SignUp() {
                     </Link>
                   </span>
                 </Typography>
-              </Box>
-              <Divider>
-                <Typography sx={{ color: "text.secondary" }}>or</Typography>
-              </Divider>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="outlined"
-                  onClick={() => alert("Sign up with Google")}
-                  startIcon={<GoogleIcon />}
-                >
-                  Sign up with Google
-                </Button>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="outlined"
-                  onClick={() => alert("Sign up with Facebook")}
-                  startIcon={<FacebookIcon />}
-                >
-                  Sign up with Facebook
-                </Button>
               </Box>
             </Card>
           </Stack>

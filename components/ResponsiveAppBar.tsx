@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import Image from "next/image";
 import Link from "next/link";
 
-const pages = ["Register", "Session"];
+const pages = ["sign-in", "sign-up"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 type HeaderProps = {
@@ -63,7 +63,7 @@ function ResponsiveAppBar({ title }: HeaderProps) {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            // href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -147,7 +147,7 @@ function ResponsiveAppBar({ title }: HeaderProps) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="/icon.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
