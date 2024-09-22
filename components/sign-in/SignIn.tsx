@@ -19,6 +19,13 @@ import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import axios from "axios";
 import { useRouter } from "next/router";
+import {
+  setCookie,
+  getCookie,
+  getCookies,
+  hasCookie,
+  deleteCookie,
+} from "cookies-next";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -91,7 +98,12 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
       // レスポンスデータを変数に格納
       console.log("ログインできたよ");
-      console.log(res.headers);
+
+      setCookie("_access_token", res.headers["access-token"]);
+      setCookie("_client", res.headers["client"]);
+      setCookie("_uid", res.headers["uid"]);
+
+      console.log(getCookie("_uid"));
 
       router.push("/"); //リダイレクト
     } catch (err) {
