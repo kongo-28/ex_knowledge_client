@@ -84,10 +84,14 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
     ////////////////// APIをたたく///////////////////////
     try {
-      await axios.post("http://localhost:3000/auth/sign_in", {
+      const res = await axios.post("http://localhost:3000/auth/sign_in", {
         email: email,
         password: password,
       });
+
+      // レスポンスデータを変数に格納
+      console.log("ログインできたよ");
+      console.log(res.headers);
 
       router.push("/"); //リダイレクト
     } catch (err) {
