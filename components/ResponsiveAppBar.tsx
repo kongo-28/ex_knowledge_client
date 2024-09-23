@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,6 +14,13 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  setCookie,
+  getCookie,
+  getCookies,
+  hasCookie,
+  deleteCookie,
+} from "cookies-next";
 
 const pages = ["sign-in", "sign-up"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
