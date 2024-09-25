@@ -19,13 +19,7 @@ import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import axios from "axios";
 import { useRouter } from "next/router";
-import {
-  setCookie,
-  getCookie,
-  getCookies,
-  hasCookie,
-  deleteCookie,
-} from "cookies-next";
+import Cookies from "js-cookie";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -82,34 +76,44 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+  const [isError, setIsError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(email, password);
-
-    ////////////////// APIをたたく///////////////////////
-    try {
-      const res = await axios.post("http://localhost:3000/auth/sign_in", {
-        email: email,
-        password: password,
-      });
-
-      // レスポンスデータを変数に格納
-      console.log("ログインできたよ");
-
-      setCookie("_access_token", res.headers["access-token"]);
-      setCookie("_client", res.headers["client"]);
-      setCookie("_uid", res.headers["uid"]);
-
-      console.log(getCookie("_uid"));
-
-      router.push("/"); //リダイレクト
-    } catch (err) {
-      alert("ログインに失敗しました");
-    }
-    ////////////////// APIをたたく///////////////////////
+    const axiosInstance = axios.create({
+      baseURL: `http://localhost:3000/`,
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    (async () => {
+      setIsError(false);
+      setErrorMessage("");
+      return await axiosInstance
+        .post("auth/sign_in", {
+          email: data.get("email"),
+          password: data.get("password"),
+        })
+        .then(function (response) {
+          // Cookieにトークンをセットしています
+          Cookies.set("uid", response.headers["uid"]);
+          Cookies.set("client", response.headers["client"]);
+          Cookies.set("access-token", response.headers["access-token"]);
+          router.push("/");
+        })
+        .catch(function (error) {
+          // Cookieからトークンを削除しています
+          Cookies.remove("uid");
+          Cookies.remove("client");
+          Cookies.remove("access-token");
+          setIsError(true);
+          setErrorMessage(error.response.data.errors[0]);
+        });
+    })();
   };
 
   const validateInputs = () => {
