@@ -6,28 +6,15 @@ import { Knowledge } from "@/types";
 import Link from "next/link";
 import Header from "@/components/Header";
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import { GetServerSideProps } from "next";
+import { withAuthServerSideProps } from "../lib/auth";
 
-type Props = {
-  knowledges: Knowledge[];
-};
-
-export async function getStaticProps() {
-  const res = await fetch("http://localhost:3000/knowledges");
-  const knowledges = await res.json();
-
-  console.log(knowledges);
-
-  return {
-    props: {
-      knowledges,
-    },
-    revalidate: 60 * 60 * 24,
-  };
-}
+export const getServerSideProps: GetServerSideProps =
+  withAuthServerSideProps("/knowledges");
 
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
-export default function Home({ knowledges }: Props) {
+export default function Home(props) {
   return (
     <>
       <Head>
@@ -38,13 +25,12 @@ export default function Home({ knowledges }: Props) {
       </Head>
 
       <div className={styles.homeContainer}>
-        {/* <h2>EX-Knowledge</h2> */}
         <div>
-          {/* <Header title="Home" /> */}
           <ResponsiveAppBar title="Home" />
+          <div>こんにちは！！{props.user.email}さん！！！！！！！！</div>
         </div>
         <div>
-          {knowledges.map((knowledge: Knowledge) => (
+          {props.knowledges.map((knowledge: Knowledge) => (
             <div key={knowledge.id} className={styles.postCard}>
               <p>{knowledge.title}</p>
               <p>{knowledge.content}</p>
