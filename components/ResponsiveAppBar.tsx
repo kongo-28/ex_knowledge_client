@@ -14,16 +14,12 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  setCookie,
-  getCookie,
-  getCookies,
-  hasCookie,
-  deleteCookie,
-} from "cookies-next";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const pages = ["sign-in", "sign-up"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Profile", "Account", "Dashboard"];
 
 type HeaderProps = {
   title: string;
@@ -52,12 +48,28 @@ function ResponsiveAppBar({ title }: HeaderProps) {
     setAnchorElUser(null);
   };
 
+  const router = useRouter();
+  ////////////////ログアウト機能/////////////
+  const handleLogout = async () => {
+    try {
+      await axios.delete("http://localhost:3000/auth/sign_out", {
+        headers: {
+          uid: Cookies.get("uid"),
+          client: Cookies.get("client"),
+          "access-token": Cookies.get("access-token"),
+        },
+      });
+      router.reload();
+    } catch (err) {
+      alert("削除に失敗しました");
+    }
+  };
+  ////////////////ログアウト機能/////////////
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-
           <Link href="/">
             <Image
               src="/IMG_0076.PNG"
@@ -70,7 +82,6 @@ function ResponsiveAppBar({ title }: HeaderProps) {
             variant="h6"
             noWrap
             component="a"
-            // href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -176,10 +187,13 @@ function ResponsiveAppBar({ title }: HeaderProps) {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: "center" }}>
-                    {setting}
+                    <Link href={`/${setting.toLowerCase()}`}> {setting}</Link>
                   </Typography>
                 </MenuItem>
               ))}
+              <MenuItem onClick={handleLogout}>
+                <Typography sx={{ textAlign: "center" }}>Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

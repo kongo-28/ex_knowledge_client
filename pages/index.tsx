@@ -24,12 +24,12 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className={styles.homeContainer}>
+      <div>
         <div>
-          <ResponsiveAppBar title="Home" />
+          <ResponsiveAppBar title="" />
           <div>こんにちは！！{props.user.email}さん！！！！！！！！</div>
         </div>
-        <div>
+        <div className={styles.homeContainer}>
           {props.knowledges.map((knowledge: Knowledge) => (
             <div key={knowledge.id} className={styles.postCard}>
               <p>{knowledge.title}</p>
