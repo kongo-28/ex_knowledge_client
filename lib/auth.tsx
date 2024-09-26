@@ -4,13 +4,19 @@ export const withAuthServerSideProps = (url: string): GetServerSideProps => {
   return async (context) => {
     const { req, res } = context;
 
+    const uid = req.cookies?.["uid"] || "";
+    const client = req.cookies?.["client"] || "";
+    const accessToken = req.cookies?.["access-token"] || "";
+
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      uid: uid,
+      client: client,
+      "access-token": accessToken,
+    });
+
     const response = await fetch(`http://localhost:3000${url}`, {
-      headers: {
-        "Content-Type": "application/json",
-        uid: req.cookies["uid"],
-        client: req.cookies["client"],
-        "access-token": req.cookies["access-token"],
-      },
+      headers: headers,
     });
     if (!response.ok && response.status === 401) {
       return {
